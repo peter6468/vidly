@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import TableHeader from './commom/tableHeader';
-import TableBody from './commom/tableBody';
+import Table from './commom/table';
 import Like from './commom/like';
 
 class MoviesTable extends Component {
@@ -33,18 +32,15 @@ class MoviesTable extends Component {
     // anew prop set a jsx expression
 
     render() { 
-        const { movies, onDelete, onLike, onSort, sortColumn } = this.props; 
+        const { movies, onSort, sortColumn } = this.props; 
 
         return ( 
-           <table className="table">
-            <TableHeader 
-                columns={this.columns} 
-                sortColumn={sortColumn}     
-                onSort={onSort}
-            />
-            <TableBody columns={this.columns} data={movies} />
-
-       </table>
+            <Table 
+            columns={this.columns} 
+            data={movies} 
+            sortColumn={sortColumn} 
+            onSort={onSort} />
+   
         );  
     }
  }
