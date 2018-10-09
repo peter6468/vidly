@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
+import {Link} from 'react-router-dom';
 import Table from './commom/table';
 import Like from './commom/like';
 
 class MoviesTable extends Component {
     columns = [
-        {path: 'title', label: 'Title' },
+        {
+            path: 'title', 
+            label: 'Title', 
+            content: movie => <Link to={`/movies/${movie._id}`}>{movie.title}</Link>
+         },
         {path: 'genre.name', label: 'Genre' },
         {path: 'numberInStock', label: 'Stock' },
         {path: 'dailyRentalRate'  , label: 'Rate' },
@@ -47,3 +52,8 @@ class MoviesTable extends Component {
 
   
  export default MoviesTable;
+
+ //instaed of passing an element pass => that takes a movie
+ // content: <Link to="/movies"></Link>, pass {}, inside template literal
+ // so string is /movies and $ adds a argument: the movie_id
+ //template literal used to dynamically insett values into a string
