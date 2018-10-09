@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import TableHeader from './tableHeader';
 import TableBody from './tableBody';
 
-const Table = (props) => {
-    //obj destruct
-    const { columns, sortColumn, onSort, data} = props;
+const Table = ({ columns, sortColumn, onSort, data}) => {
+    //obj destruc
     return (          
     <table className="table">
         <TableHeader 
