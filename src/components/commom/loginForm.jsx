@@ -11,25 +11,36 @@ class LoginForm extends Component {
     };
 
     schema = {
-        username: Joi.string().required(),
-        password: Joi.string().required()
+        username: Joi.string()
+            .required()
+            .label('UserName'),
+        password: Joi.string()
+            .required()
+            .label('Password')
     }; 
-
+ 
     validate = () => {
-        const result = Joi.validate(this.state.account, this.schema, {
-            abortEarly: false
-        });
-        console.log(result);
+        const options = { abortEarly: false };
+        //destruc result.error
+        const {error} = Joi.validate(this.state.account, this.schema, options);
+        if (!error) return null;
+
         const errors = {};
+        //maps an array into an obj
+        for (let item of error.details)
+            errors[item.path[0]] = item.message
+        return errors;
+    };
 
-        const { account } = this.state
-        if (account.username.trim() === '')
-            errors.username = 'Username is required.';
-
-        if (account.password.trim() === '')
-            errors.password = 'Password is required.';
-
-        return Object.keys(errors).length === 0 ? null : errors; 
+    validateProperty = ({ name, value }) => {
+        //const obj = { username: value }; es6 dont want to hardcode name here
+        //whatever name is @ runtim, it will set the key
+        const obj = { [name]: value };
+        const schema = { [name]: this.schema[name]};
+        const {error} = Joi.validate(obj, schema);
+        return error ? error.details[0].message : null;
+        //used ternnary conditional operator above: ?if :otherwise
+        //return error.details[0].message  
     }
  
     handleSubmit =   e => {
